@@ -1,0 +1,46 @@
+name: Golang with cache
+author: Peter Mescalchin
+description: Setup requested Golang version with enabled module and build caching.
+
+inputs:
+  go-version:
+    description: The desired Go version to use.
+    required: true
+  cache-key-suffix:
+    description: Optional cache key suffix.
+    default:
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Golang
+      uses: actions/setup-go@v2
+      with:
+        go-version: ${{ inputs.go-version }}
+    - name: Determine OS Golang paths
+      id: golang-path
+      run: |
+        buildPath="~/.cache/go-build"
+        modulePath="~/go/pkg/mod"
+
+        if [[ $RUNNER_OS == "macOS" ]]; then
+          buildPath="~/Library/Caches/go-build"
+        fi
+
+        if [[ $RUNNER_OS == "Windows" ]]; then
+          buildPath="~\AppData\Local\go-build"
+          modulePath="~\go\pkg\mod"
+        fi
+
+        echo "::set-output name=build::$buildPath"
+        echo "::set-output name=module::$modulePath"
+      shell: bash
+    - name: Setup Golang caches
+      uses: actions/cache@v2
+      with:
+        path: |
+          ${{ steps.golang-path.outputs.build }}
+          ${{ steps.golang-path.outputs.module }}
+        key: ${{ runner.os }}-golang${{ inputs.cache-key-suffix }}-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-golang${{ inputs.cache-key-suffix }}-
