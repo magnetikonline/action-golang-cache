@@ -28,7 +28,7 @@ down to this:
 ```yaml
 steps:
   - name: Setup Golang with cache
-    uses: magnetikonline/action-golang-cache@v1
+    uses: magnetikonline/action-golang-cache@v2
     with:
       go-version: ~1.17
 ```
@@ -40,7 +40,7 @@ In addition an optional `cache-key-suffix` input can be used to control the gene
 ```yaml
 steps:
   - name: Testing action
-    uses: magnetikonline/action-golang-cache@v1
+    uses: magnetikonline/action-golang-cache@v2
     with:
       go-version: ~1.17
       cache-key-suffix: -apples
