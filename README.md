@@ -9,7 +9,7 @@ Reducing all these workflow steps:
 ```yaml
 steps:
   - name: Setup Golang
-    uses: actions/setup-go@v2
+    uses: actions/setup-go@v3
     with:
       go-version: ~1.17
   - name: Setup Golang caches
