@@ -36,7 +36,7 @@ runs:
         echo "::set-output name=module::$modulePath"
       shell: bash
     - name: Setup Golang caches
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: |
           ${{ steps.golang-path.outputs.build }}

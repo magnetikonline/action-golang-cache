@@ -13,7 +13,7 @@ steps:
     with:
       go-version: ~1.17
   - name: Setup Golang caches
-    uses: actions/cache@v2
+    uses: actions/cache@v3
     with:
       path: |
         ~/.cache/go-build
