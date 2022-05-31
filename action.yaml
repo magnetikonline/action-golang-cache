@@ -17,25 +17,13 @@ runs:
       uses: actions/setup-go@v3
       with:
         go-version: ${{ inputs.go-version }}
-    - name: Determine OS Golang paths
+    - name: Determine Golang cache paths
       id: golang-path
       run: |
-        buildPath="~/.cache/go-build"
-        modulePath="~/go/pkg/mod"
-
-        if [[ $RUNNER_OS == "macOS" ]]; then
-          buildPath="~/Library/Caches/go-build"
-        fi
-
-        if [[ $RUNNER_OS == "Windows" ]]; then
-          buildPath="~\AppData\Local\go-build"
-          modulePath="~\go\pkg\mod"
-        fi
-
-        echo "::set-output name=build::$buildPath"
-        echo "::set-output name=module::$modulePath"
+        echo "::set-output name=build::$(go env GOCACHE)"
+        echo "::set-output name=module::$(go env GOMODCACHE)"
       shell: bash
-    - name: Setup Golang caches
+    - name: Setup Golang cache
       uses: actions/cache@v3
       with:
         path: |
