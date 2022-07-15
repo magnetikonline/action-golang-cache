@@ -33,7 +33,7 @@ steps:
       go-version: ~1.17
 ```
 
-Action correctly sets the build and module cache paths for Linux, macOS _and_ Windows runners as per the [Golang cache examples](https://github.com/actions/cache/blob/main/examples.md#go---modules).
+Action correctly sets build and module cache paths for Linux, macOS _and_ Windows runners.
 
 In addition an optional `cache-key-suffix` input can be used to control the generated cache key - handy where a Golang program is compiled multiple times for different binaries across multiple workflow definitions - resulting in different optimized build cache path contents:
 
