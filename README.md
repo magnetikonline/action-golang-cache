@@ -11,7 +11,7 @@ steps:
   - name: Setup Golang
     uses: actions/setup-go@v3
     with:
-      go-version: ~1.17
+      go-version: ~1.18
   - name: Setup Golang caches
     uses: actions/cache@v3
     with:
@@ -30,7 +30,7 @@ steps:
   - name: Setup Golang with cache
     uses: magnetikonline/action-golang-cache@v2
     with:
-      go-version: ~1.17
+      go-version: ~1.18
 ```
 
 Action correctly sets build and module cache paths for Linux, macOS _and_ Windows runners.
@@ -42,7 +42,7 @@ steps:
   - name: Testing action
     uses: magnetikonline/action-golang-cache@v2
     with:
-      go-version: ~1.17
+      go-version: ~1.18
       cache-key-suffix: -apples
 
 # cache key:   ${{ runner.os }}-golang-apples-${{ hashFiles('**/go.sum') }}
