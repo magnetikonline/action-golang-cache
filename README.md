@@ -28,9 +28,19 @@ down to this:
 ```yaml
 steps:
   - name: Setup Golang with cache
-    uses: magnetikonline/action-golang-cache@v2
+    uses: magnetikonline/action-golang-cache@v3
     with:
       go-version: ~1.18
+```
+
+or using `go-version-file` for version selection:
+
+```yaml
+steps:
+  - name: Setup Golang with cache
+    uses: magnetikonline/action-golang-cache@v3
+    with:
+      go-version-file: go.mod
 ```
 
 Action correctly sets build and module cache paths for Linux, macOS _and_ Windows runners.
@@ -40,7 +50,7 @@ In addition an optional `cache-key-suffix` input can be used to control the gene
 ```yaml
 steps:
   - name: Testing action
-    uses: magnetikonline/action-golang-cache@v2
+    uses: magnetikonline/action-golang-cache@v3
     with:
       go-version: ~1.18
       cache-key-suffix: -apples
