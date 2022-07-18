@@ -4,8 +4,9 @@ description: Setup requested Golang version with enabled module and build cachin
 
 inputs:
   go-version:
-    description: The desired Go version to use.
-    required: true
+    description: Desired Golang version to use.
+  go-version-file:
+    description: Path to go.mod file, determines Golang version to use. Used in place of `go-version` input.
   cache-key-suffix:
     description: Optional cache key suffix.
     default:
@@ -17,6 +18,7 @@ runs:
       uses: actions/setup-go@v3
       with:
         go-version: ${{ inputs.go-version }}
+        go-version-file: ${{ inputs.go-version-file }}
     - name: Determine Golang cache paths
       id: golang-path
       run: |
