@@ -31,6 +31,6 @@ runs:
         path: |
           ${{ steps.golang-path.outputs.build }}
           ${{ steps.golang-path.outputs.module }}
-        key: ${{ runner.os }}-golang${{ inputs.cache-key-suffix }}-${{ hashFiles('**/go.sum') }}
+        key: ${{ runner.os }}-golang${{ inputs.cache-key-suffix && '-' }}${{ inputs.cache-key-suffix }}-${{ hashFiles('**/go.sum') }}
         restore-keys: |
-          ${{ runner.os }}-golang${{ inputs.cache-key-suffix }}-
+          ${{ runner.os }}-golang${{ inputs.cache-key-suffix && '-' }}${{ inputs.cache-key-suffix }}-
