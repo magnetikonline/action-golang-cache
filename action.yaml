@@ -4,9 +4,9 @@ description: Setup requested Golang version with enabled module and build cachin
 
 inputs:
   go-version:
-    description: Desired Golang version to use.
+    description: Desired Golang version.
   go-version-file:
-    description: Path to go.mod file, determines Golang version to use. Used in place of `go-version` input.
+    description: Path to go.mod file, will determine Golang version. Use in place of `go-version` input.
   cache-key-suffix:
     description: Optional cache key suffix.
     default:
