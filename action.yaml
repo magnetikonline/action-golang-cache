@@ -11,6 +11,17 @@ inputs:
     description: Optional cache key suffix.
     default:
 
+outputs:
+  build-cache-path:
+    description: Golang build cache path.
+    value: ${{ steps.golang-env.outputs.build-cache-path }}
+  module-cache-path:
+    description: Golang module cache path.
+    value: ${{ steps.golang-env.outputs.module-cache-path }}
+  cache-key:
+    description: Cache key holding Golang build and module cache paths.
+    value: ${{ steps.golang-env.outputs.cache-key }}
+
 runs:
   using: composite
   steps:
@@ -19,18 +30,21 @@ runs:
       with:
         go-version: ${{ inputs.go-version }}
         go-version-file: ${{ inputs.go-version-file }}
-    - name: Determine Golang cache paths
-      id: golang-path
+    - name: Determine Golang cache paths and construct cache key
+      id: golang-env
       run: |
-        echo "build=$(go env GOCACHE)" >>"$GITHUB_OUTPUT"
-        echo "module=$(go env GOMODCACHE)" >>"$GITHUB_OUTPUT"
+        echo "build-cache-path=$(go env GOCACHE)" >>"$GITHUB_OUTPUT"
+        echo "module-cache-path=$(go env GOMODCACHE)" >>"$GITHUB_OUTPUT"
+        cacheKeyRoot="${{ runner.os }}-golang${{ inputs.cache-key-suffix && '-' }}${{ inputs.cache-key-suffix }}-"
+        echo "cache-key-restore=$cacheKeyRoot" >>"$GITHUB_OUTPUT"
+        echo "cache-key=${cacheKeyRoot}${{ hashFiles('**/go.sum') }}" >>"$GITHUB_OUTPUT"
       shell: bash
     - name: Setup Golang cache
       uses: actions/cache@v3
       with:
         path: |
-          ${{ steps.golang-path.outputs.build }}
-          ${{ steps.golang-path.outputs.module }}
-        key: ${{ runner.os }}-golang${{ inputs.cache-key-suffix && '-' }}${{ inputs.cache-key-suffix }}-${{ hashFiles('**/go.sum') }}
+          ${{ steps.golang-env.outputs.build-cache-path }}
+          ${{ steps.golang-env.outputs.module-cache-path }}
+        key: ${{ steps.golang-env.outputs.cache-key }}
         restore-keys: |
-          ${{ runner.os }}-golang${{ inputs.cache-key-suffix && '-' }}${{ inputs.cache-key-suffix }}-
+          ${{ steps.golang-env.outputs.cache-key-restore }}
