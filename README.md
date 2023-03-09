@@ -53,7 +53,7 @@ steps:
     uses: magnetikonline/action-golang-cache@v3
     with:
       go-version: ~1.20
-      cache-key-suffix: -apples
+      cache-key-suffix: apples
 
 # cache key:   ${{ runner.os }}-golang-apples-${{ hashFiles('**/go.sum') }}
 # restore key: ${{ runner.os }}-golang-apples-
