@@ -26,8 +26,9 @@ runs:
   using: composite
   steps:
     - name: Setup Golang
-      uses: actions/setup-go@v3
+      uses: actions/setup-go@v4
       with:
+        cache: false
         go-version: ${{ inputs.go-version }}
         go-version-file: ${{ inputs.go-version-file }}
     - name: Determine Golang cache paths and construct cache key
