@@ -1,6 +1,6 @@
 name: Golang with cache
 author: Peter Mescalchin
-description: Setup requested Golang version with enabled module and build caching.
+description: Setup requested Golang version with managed module and build caching.
 
 inputs:
   go-version:
