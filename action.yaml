@@ -38,7 +38,7 @@ runs:
       run: |
         echo "build-cache-path=$(go env GOCACHE)" >>"$GITHUB_OUTPUT"
         echo "module-cache-path=$(go env GOMODCACHE)" >>"$GITHUB_OUTPUT"
-        cacheKeyRoot="${{ runner.os }}-golang${{ inputs.cache-key-suffix && '-' }}${{ inputs.cache-key-suffix }}-"
+        cacheKeyRoot="${{ runner.os }}-golang${{ inputs.cache-key-suffix && format('-{0}',inputs.cache-key-suffix) }}-"
         echo "cache-key-restore=$cacheKeyRoot" >>"$GITHUB_OUTPUT"
         echo "cache-key=${cacheKeyRoot}${{ hashFiles('**/go.sum') }}" >>"$GITHUB_OUTPUT"
       shell: bash
