@@ -23,6 +23,9 @@ outputs:
   cache-key:
     description: Cache key holding Golang build and module cache paths.
     value: ${{ steps.golang-env.outputs.cache-key }}
+  cache-hit:
+    description: Cache hit result
+    value: ${{ steps.set-cache-hit.outputs.cache-hit }}
 
 runs:
   using: composite
@@ -43,6 +46,7 @@ runs:
         echo "cache-key=${cacheKeyRoot}${{ hashFiles('**/go.sum') }}" >>"$GITHUB_OUTPUT"
       shell: bash
     - name: Setup Golang cache
+      id: cache
       uses: actions/cache@v3
       with:
         path: |
@@ -51,3 +55,8 @@ runs:
         key: ${{ steps.golang-env.outputs.cache-key }}
         restore-keys: |
           ${{ steps.golang-env.outputs.cache-key-restore }}
+    - name: Set cache-hit output
+      id: set-cache-hit
+      run: echo "cache-hit=${{ steps.cache.outputs.cache-hit }}" >>"$GITHUB_OUTPUT"
+      shell: bash
+  
