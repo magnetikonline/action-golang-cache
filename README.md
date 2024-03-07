@@ -15,11 +15,11 @@ Reduce all these workflow steps:
 ```yaml
 steps:
   - name: Setup Golang
-    uses: actions/setup-go@v4
+    uses: actions/setup-go@v5
     with:
       go-version: ~1.20
   - name: Setup Golang caches
-    uses: actions/cache@v3
+    uses: actions/cache@v4
     with:
       path: |
         ~/.cache/go-build
@@ -34,9 +34,9 @@ down to this:
 ```yaml
 steps:
   - name: Setup Golang with cache
-    uses: magnetikonline/action-golang-cache@v4
+    uses: magnetikonline/action-golang-cache@v5
     with:
-      go-version: ~1.20
+      go-version: ~1.22
 ```
 
 or better yet, use `go-version-file` for version selection:
@@ -44,7 +44,7 @@ or better yet, use `go-version-file` for version selection:
 ```yaml
 steps:
   - name: Setup Golang with cache
-    uses: magnetikonline/action-golang-cache@v4
+    uses: magnetikonline/action-golang-cache@v5
     with:
       go-version-file: go.mod
 ```
@@ -58,9 +58,9 @@ An optional `cache-key-suffix` input allows control of the generated cache key. 
 ```yaml
 steps:
   - name: Cache key suffix
-    uses: magnetikonline/action-golang-cache@v4
+    uses: magnetikonline/action-golang-cache@v5
     with:
-      go-version: ~1.20
+      go-version: ~1.22
       cache-key-suffix: apples
 
 # cache key:   ${{ runner.os }}-golang-apples-${{ hashFiles('**/go.sum') }}
@@ -75,7 +75,7 @@ Outputs of `build-cache-path`, `module-cache-path` and `cache-key` are provided 
 steps:
   - name: Setup Golang with cache
     id: golang-with-cache
-    uses: magnetikonline/action-golang-cache@v4
+    uses: magnetikonline/action-golang-cache@v5
     with:
       go-version-file: go.mod
 
@@ -83,7 +83,7 @@ steps:
 
   - name: Save Golang cache
     if: always()
-    uses: actions/cache/save@v3
+    uses: actions/cache/save@v4
     with:
       path: |
         ${{ steps.golang-with-cache.outputs.build-cache-path }}
